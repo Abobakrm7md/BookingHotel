@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BookingHotel.DAL.Entities
 {
-    public class Hotel
+    public class LookUp
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Branch>  Branches { get; set; }
+        public double Cost { get; set; }
     }
 }

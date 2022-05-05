@@ -4,14 +4,16 @@ using BookingHotel.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookingHotel.DAL.Migrations
 {
     [DbContext(typeof(BookingHotelContext))]
-    partial class BookingHotelContextModelSnapshot : ModelSnapshot
+    [Migration("20220505165933_createlookupandhotel")]
+    partial class createlookupandhotel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,13 +38,16 @@ namespace BookingHotel.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("b_checkout_date");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
                         .HasColumnName("b_user_id");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("booking");
                 });
@@ -52,53 +57,19 @@ namespace BookingHotel.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("b_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("HotelId")
-                        .HasColumnType("int")
-                        .HasColumnName("b_h_id");
-
-                    b.Property<int?>("HotelId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("b_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
 
-                    b.HasIndex("HotelId1");
-
-                    b.ToTable("branch");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            HotelId = 1,
-                            Name = "Prim Branch"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            HotelId = 1,
-                            Name = "secondary Branch"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            HotelId = 2,
-                            Name = "Prim Branch"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            HotelId = 2,
-                            Name = "secondary Branch"
-                        });
+                    b.ToTable("Branch");
                 });
 
             modelBuilder.Entity("BookingHotel.DAL.Entities.Hotel", b =>
@@ -116,18 +87,6 @@ namespace BookingHotel.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("hotel");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Helton"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "ElTahrir"
-                        });
                 });
 
             modelBuilder.Entity("BookingHotel.DAL.Entities.LookUp", b =>
@@ -217,8 +176,7 @@ namespace BookingHotel.DAL.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<long>("NationalId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("u_national_id");
+                        .HasColumnType("bigint");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -395,8 +353,7 @@ namespace BookingHotel.DAL.Migrations
                 {
                     b.HasOne("BookingHotel.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
@@ -404,14 +361,10 @@ namespace BookingHotel.DAL.Migrations
             modelBuilder.Entity("BookingHotel.DAL.Entities.Branch", b =>
                 {
                     b.HasOne("BookingHotel.DAL.Entities.Hotel", "Hotel")
-                        .WithMany()
+                        .WithMany("Branches")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BookingHotel.DAL.Entities.Hotel", null)
-                        .WithMany("Branches")
-                        .HasForeignKey("HotelId1");
 
                     b.Navigation("Hotel");
                 });
