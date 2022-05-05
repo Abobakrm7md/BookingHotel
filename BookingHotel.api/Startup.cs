@@ -1,3 +1,6 @@
+using BookingHotel.api.CostomMeddileWares;
+using BookingHotel.BLL.Intrefaces;
+using BookingHotel.BLL.Services;
 using BookingHotel.DAL.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,19 +38,7 @@ namespace BookingHotel.api
                 optionsBuilder.UseSqlServer(BookingHotelSettings.ConnectionString);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
-            //services
-            //             .AddEntityFrameworkSqlServer()
-            //             .AddDbContextPool<BookingHotelContext>(options =>
-            //             {
-            //                 if (!options.IsConfigured)
-            //                     options.UseSqlServer(BookingHotelSettings.ConnectionString,
-            //                     sqlOptions =>
-            //                     {
-
-            //                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-            //                     }
-            //                 );
-            //             });
+            services.AddScoped<IHotelService, HotelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +57,7 @@ namespace BookingHotel.api
 
             app.UseAuthorization();
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

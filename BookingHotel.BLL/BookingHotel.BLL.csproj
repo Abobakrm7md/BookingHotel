@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.0.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BookingHotel.DAL\BookingHotel.DAL.csproj" />
   </ItemGroup>
 
