@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BookingHotel.api.Application.Validations.RoomValidator
 {
-    public class RoomRequestValidation : AbstractValidator<RoomRequest>
+    public class RoomRequestValidator : AbstractValidator<RoomRequest>
     {
-        public RoomRequestValidation()
+        public RoomRequestValidator()
         {
             RuleFor(x=>x.HotelId).NotEmpty().NotEmpty().GreaterThan(0);
             RuleFor(x => x.BranchId).NotEmpty().NotEmpty().GreaterThan(0);

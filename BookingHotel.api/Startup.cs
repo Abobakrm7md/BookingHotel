@@ -13,6 +13,11 @@ using Microsoft.OpenApi.Models;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using BookingHotel.api.Application.Validations.RoomValidator;
+using BookingHotel.BLL.Intrefaces.Booking;
+using BookingHotel.BLL.Services.Booking;
+using BookingHotel.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using MediatR;
 
 namespace BookingHotel.api
 {
@@ -37,7 +42,7 @@ namespace BookingHotel.api
             services.AddFluentValidation(fv =>
             {
                 fv.DisableDataAnnotationsValidation = true;
-                fv.RegisterValidatorsFromAssemblyContaining<RoomRequestValidation>();
+                fv.RegisterValidatorsFromAssemblyContaining<RoomRequestValidator>();
             });
 
             services.AddSwaggerGen(c =>
@@ -51,10 +56,10 @@ namespace BookingHotel.api
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
 
-
-           
+            services.AddMediatR();
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IBookingService, BookingService>();
 
         }
 
