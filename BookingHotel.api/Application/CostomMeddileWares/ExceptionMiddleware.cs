@@ -9,7 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace BookingHotel.api.CostomMeddileWares
+namespace BookingHotel.api.Application.CostomMeddileWares
 {
     public class ExceptionMiddleware
     {

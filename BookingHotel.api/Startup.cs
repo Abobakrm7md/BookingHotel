@@ -1,4 +1,5 @@
-using BookingHotel.api.CostomMeddileWares;
+using BookingHotel.api.Application.CostomMeddileWares;
+using BookingHotel.api.Configurations;
 using BookingHotel.BLL.Intrefaces;
 using BookingHotel.BLL.Services;
 using BookingHotel.DAL.Data;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using BookingHotel.api.Application.Validations.RoomValidator;
 
 namespace BookingHotel.api
 {
@@ -26,8 +30,16 @@ namespace BookingHotel.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddControllers();
+
+            services.AddFluentValidation(fv =>
+            {
+                fv.DisableDataAnnotationsValidation = true;
+                fv.RegisterValidatorsFromAssemblyContaining<RoomRequestValidation>();
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookingHotel.api", Version = "v1" });
@@ -38,7 +50,12 @@ namespace BookingHotel.api
                 optionsBuilder.UseSqlServer(BookingHotelSettings.ConnectionString);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
+
+
+           
             services.AddScoped<IHotelService, HotelService>();
+            services.AddScoped<IRoomService, RoomService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

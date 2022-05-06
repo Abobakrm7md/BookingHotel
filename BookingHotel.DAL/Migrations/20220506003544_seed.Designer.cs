@@ -4,14 +4,16 @@ using BookingHotel.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookingHotel.DAL.Migrations
 {
     [DbContext(typeof(BookingHotelContext))]
-    partial class BookingHotelContextModelSnapshot : ModelSnapshot
+    [Migration("20220506003544_seed")]
+    partial class seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,176 +211,6 @@ namespace BookingHotel.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("room");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BranchId = 1,
-                            HotelId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BranchId = 1,
-                            HotelId = 1,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BranchId = 1,
-                            HotelId = 1,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BranchId = 2,
-                            HotelId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BranchId = 2,
-                            HotelId = 1,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BranchId = 2,
-                            HotelId = 1,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BranchId = 1,
-                            HotelId = 2,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            BranchId = 1,
-                            HotelId = 2,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            BranchId = 1,
-                            HotelId = 2,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 10,
-                            BranchId = 2,
-                            HotelId = 2,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            BranchId = 2,
-                            HotelId = 2,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 12,
-                            BranchId = 2,
-                            HotelId = 2,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 13,
-                            BranchId = 1,
-                            HotelId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 14,
-                            BranchId = 1,
-                            HotelId = 1,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 15,
-                            BranchId = 1,
-                            HotelId = 1,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 16,
-                            BranchId = 2,
-                            HotelId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 17,
-                            BranchId = 2,
-                            HotelId = 1,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 18,
-                            BranchId = 2,
-                            HotelId = 1,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 19,
-                            BranchId = 1,
-                            HotelId = 2,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 20,
-                            BranchId = 1,
-                            HotelId = 2,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 21,
-                            BranchId = 1,
-                            HotelId = 2,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 22,
-                            BranchId = 2,
-                            HotelId = 2,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 23,
-                            BranchId = 2,
-                            HotelId = 2,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 24,
-                            BranchId = 2,
-                            HotelId = 2,
-                            Type = 3
-                        });
                 });
 
             modelBuilder.Entity("BookingHotel.DAL.Entities.User", b =>

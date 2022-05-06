@@ -1,4 +1,4 @@
-﻿namespace BookingHotel.api
+﻿namespace BookingHotel.api.Configurations
 {
     public class BookingHotelSettings
     {

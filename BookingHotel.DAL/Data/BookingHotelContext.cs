@@ -23,7 +23,6 @@ namespace BookingHotel.DAL.Data
 
         public virtual DbSet<Hotel> Hotels { get; set; }
         public virtual DbSet<Branch>  Branches { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Room>  Rooms { get; set; }
         public virtual DbSet<Booking>  Bookings { get; set; }
         public virtual DbSet<LookUp>  LookUps { get; set; }
@@ -44,17 +43,52 @@ namespace BookingHotel.DAL.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
-            //modelBuilder.Entity<Excelproducts>().HasQueryFilter(ep => ep.EpDisablePrInapp != CGlobal.DisableProductInapp.DisableProductInapp.GetHashCode());
-            //modelBuilder.Entity<Market>().HasQueryFilter(market => market.MarketDisable != CGlobal.MarketDisabled.Disabled.GetHashCode());
+            modelBuilder.Entity<Room>().HasQueryFilter(x=>x.BookingId == null);
+            SeedData(modelBuilder);
 
+        }
+
+        private static void SeedData(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Hotel>().HasData(new Hotel { Id = 1, Name = "Helton" });
             modelBuilder.Entity<Hotel>().HasData(new Hotel { Id = 2, Name = "ElTahrir" });
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, Name = "Prim Branch", HotelId = 1 });
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, Name = "secondary Branch", HotelId = 1 });
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, Name = "Prim Branch", HotelId = 2 });
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, Name = "secondary Branch", HotelId = 2 });
+            modelBuilder.Entity<LookUp>().HasData(new LookUp { Id = 1, Name = "Single", Cost = 50 });
+            modelBuilder.Entity<LookUp>().HasData(new LookUp { Id = 2, Name = "double", Cost = 30 });
+            modelBuilder.Entity<LookUp>().HasData(new LookUp { Id = 3, Name = "Suit", Cost = 150 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 1, HotelId = 1, Type = 1, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 2, HotelId = 1, Type = 2, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 3, HotelId = 1, Type = 3, BranchId = 1 });
 
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 4, HotelId = 1, Type = 1, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 5, HotelId = 1, Type = 2, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 6, HotelId = 1, Type = 3, BranchId = 2 });
+
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 7, HotelId = 2, Type = 1, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 8, HotelId = 2, Type = 2, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 9, HotelId = 2, Type = 3, BranchId = 1 });
+
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 10, HotelId = 2, Type = 1, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 11, HotelId = 2, Type = 2, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 12, HotelId = 2, Type = 3, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 13, HotelId = 1, Type = 1, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 14, HotelId = 1, Type = 2, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 15, HotelId = 1, Type = 3, BranchId = 1 });
+
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 16, HotelId = 1, Type = 1, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 17, HotelId = 1, Type = 2, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 18, HotelId = 1, Type = 3, BranchId = 2 });
+
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 19, HotelId = 2, Type = 1, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 20, HotelId = 2, Type = 2, BranchId = 1 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 21, HotelId = 2, Type = 3, BranchId = 1 });
+
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 22, HotelId = 2, Type = 1, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 23, HotelId = 2, Type = 2, BranchId = 2 });
+            modelBuilder.Entity<Room>().HasData(new Room { Id = 24, HotelId = 2, Type = 3, BranchId = 2 });
         }
-
     }
     }
