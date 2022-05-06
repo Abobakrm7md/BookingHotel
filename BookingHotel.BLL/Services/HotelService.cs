@@ -18,6 +18,17 @@ namespace BookingHotel.BLL.Services
         {
             _context = context;
         }
+
+        public async Task<List<BranchModel>> GetBranches(int HotelId)
+        {
+            var branches = await _context.Branches.Where(x => x.HotelId == HotelId).Select(x => new BranchModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
+            return branches;
+        }
+
         public async Task<List<HotelModel>> GetHotels()
         {
             var hotels = await( _context.Hotels.Select(x => 

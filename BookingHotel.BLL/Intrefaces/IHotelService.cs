@@ -11,5 +11,6 @@ namespace BookingHotel.BLL.Intrefaces
     public interface IHotelService
     {
         Task<List<HotelModel>> GetHotels();
+        Task<List<BranchModel>> GetBranches(int HotelId);
     }
 }

@@ -22,6 +22,12 @@ namespace BookingHotel.DAL.Data
         }
 
         public virtual DbSet<Hotel> Hotels { get; set; }
+        public virtual DbSet<Branch>  Branches { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Room>  Rooms { get; set; }
+        public virtual DbSet<Booking>  Bookings { get; set; }
+        public virtual DbSet<LookUp>  LookUps { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

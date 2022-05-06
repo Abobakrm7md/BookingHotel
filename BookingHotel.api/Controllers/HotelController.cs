@@ -27,5 +27,13 @@ namespace BookingHotel.api.Controllers
             var result = await hotelService.GetHotels();
             return Ok(result);
         }
+        [HttpGet("{HotelId}/branches")]
+        [ProducesResponseType(typeof(List<HotelModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Branches([FromRoute]int HotelId)
+        {
+            var result = await hotelService.GetBranches(HotelId);
+            return Ok(result);
+        }
     }
 }
