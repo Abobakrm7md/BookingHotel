@@ -18,6 +18,15 @@ using BookingHotel.BLL.Services.Booking;
 using BookingHotel.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using MediatR;
+using BookingHotel.DAL.Repository;
+using BookingHotel.api.Application.Request;
+using BookingHotel.BLL.Models.Book;
+using BookingHotel.api.Application.CommandHandler;
+using System.Reflection;
+using BookingHotel.BLL.Services.Hotel;
+using BookingHotel.BLL.Services.Room;
+using BookingHotel.DAL.Repository.Base;
+using BookingHotel.DAL.Queries;
 
 namespace BookingHotel.api
 {
@@ -42,8 +51,9 @@ namespace BookingHotel.api
             services.AddFluentValidation(fv =>
             {
                 fv.DisableDataAnnotationsValidation = true;
-                fv.RegisterValidatorsFromAssemblyContaining<RoomRequestValidator>();
+                //fv.RegisterValidatorsFromAssemblyContaining<RoomRequestValidator>();
             });
+            services.AddMediatR();
 
             services.AddSwaggerGen(c =>
             {
@@ -55,11 +65,11 @@ namespace BookingHotel.api
                 optionsBuilder.UseSqlServer(BookingHotelSettings.ConnectionString);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
-
-            services.AddMediatR();
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IBookingService, BookingService>();
+            services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddScoped<IUserQuery, UserQuery>();
 
         }
 

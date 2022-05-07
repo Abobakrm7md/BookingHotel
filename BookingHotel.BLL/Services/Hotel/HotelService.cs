@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookingHotel.BLL.Services
+namespace BookingHotel.BLL.Services.Hotel
 {
     public class HotelService : IHotelService
     {
