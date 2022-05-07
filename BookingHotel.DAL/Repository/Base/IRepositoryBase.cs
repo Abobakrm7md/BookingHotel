@@ -15,6 +15,7 @@ namespace BookingHotel.DAL.Repository.Base
         Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
         Task<T> SaveAsync(T entity, bool IsNew);
         Task DeleteAsync(T entity);
+        Task<T> Update(T entity);
         Task<int> DeleteRangeAsync(IEnumerable<T> entities); 
         Task<int> UpdateRange(IEnumerable<T> entities);
     }

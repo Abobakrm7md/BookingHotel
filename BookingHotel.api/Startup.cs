@@ -27,6 +27,8 @@ using BookingHotel.BLL.Services.Hotel;
 using BookingHotel.BLL.Services.Room;
 using BookingHotel.DAL.Repository.Base;
 using BookingHotel.DAL.Queries;
+using BookingHotel.DAL.Queries.Room;
+using BookingHotel.DAL.Queries.Book;
 
 namespace BookingHotel.api
 {
@@ -70,6 +72,8 @@ namespace BookingHotel.api
             services.AddScoped<IBookingService, BookingService>();
             services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserQuery, UserQuery>();
+            services.AddScoped<IRoomQuery , RoomQuery>();
+            services.AddScoped<IBookingQuery , BookingQuery>();
 
         }
 

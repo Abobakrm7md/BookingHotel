@@ -5,6 +5,7 @@ using BookingHotel.DAL.Data;
 using BookingHotel.DAL.Entities;
 using BookingHotel.DAL.Queries;
 using BookingHotel.DAL.Queries.Book;
+using BookingHotel.DAL.Queries.Room;
 using BookingHotel.DAL.Repository;
 using BookingHotel.DAL.Repository.Base;
 using Microsoft.AspNetCore.Identity;
@@ -21,24 +22,30 @@ namespace BookingHotel.BLL.Services.Booking
 {
     public class BookingService : IBookingService
     {
-        private readonly BookingHotelContext _context;
         private readonly IRepositoryBase<User> _userRepository;
+        private readonly IRepositoryBase<BookingHotel.DAL.Entities.Hotel> _hotelRepository;
         private readonly IRepositoryBase<BookingHotel.DAL.Entities.Booking> _bookigRepository;
         private readonly IRepositoryBase<BookingHotel.DAL.Entities.Room> _roomRepository;
         private readonly IUserQuery userQuery;
         private readonly IBookingQuery bookingQuery;
+        private readonly IRoomQuery roomQuery;
+        private readonly BookingHotelContext _context;
 
-        public BookingService(BookingHotelContext context, IRepositoryBase<User>  userUepository,
+        public BookingService(IRepositoryBase<User>  userUepository,
             IRepositoryBase<BookingHotel.DAL.Entities.Booking> bookigRepository ,
             IRepositoryBase<BookingHotel.DAL.Entities.Room> roomRepository , IUserQuery userQuery,
-            IBookingQuery bookingQuery)
+            IBookingQuery bookingQuery , IRoomQuery roomQuery ,
+            IRepositoryBase<BookingHotel.DAL.Entities.Hotel> hotelRepository,
+            BookingHotelContext context)
         {
-            this._context = context;
+            _context = context;
             _userRepository = userUepository;
             _bookigRepository = bookigRepository;
             _roomRepository = roomRepository;
+            _hotelRepository = hotelRepository;
             this.userQuery = userQuery;
             this.bookingQuery = bookingQuery;
+            this.roomQuery = roomQuery;
         }
         public async Task<BookingModel> Book(BookingArguments arguments)
         {
@@ -54,11 +61,11 @@ namespace BookingHotel.BLL.Services.Booking
             };
             await _bookigRepository.SaveAsync(newBooking, true);
 
-            var rooms = _context.Rooms.Where(x => arguments.RoomsId.Any(c => c == x.Id)).ToList();
+            var rooms =await roomQuery.GetRoomsById(arguments.RoomsId , false);
             rooms.ForEach(room => room.BookingId = newBooking.Id);
             await _roomRepository.UpdateRange(rooms);
 
-            var hotel = _context.Hotels.FirstOrDefault(x => x.Id == arguments.HotelId);
+            var hotel = await _hotelRepository.GetByIdAsync(arguments.HotelId);
             var roomcost = _context.LookUps.Where(x => x.Id == rooms.Select(x => x.Id).First()).Select(x => x.Cost).FirstOrDefault();
             return new BookingModel()
             {
@@ -115,6 +122,45 @@ namespace BookingHotel.BLL.Services.Booking
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             return tokenDescriptor;
+        }
+
+        public async Task CancelBooking(int BookingId)
+        {
+            var booking = await _bookigRepository.GetByIdAsync(BookingId);
+            if (booking == null)
+                throw new Exception("booking not found");
+            else
+            {
+                await _bookigRepository.DeleteAsync(booking);
+               var rooms = await roomQuery.GetRoomsByBookingId(BookingId ,true);
+                rooms.ForEach(room => room.BookingId = null);
+                await _roomRepository.UpdateRange(rooms);
+            }
+        }
+
+        public async Task UpdateBooking(int Id, int HotelId, int BranchId, List<int> RoomsId , DateTime CheckIn , DateTime CheckOut)
+        {
+            var booking = await _bookigRepository.GetByIdAsync(Id);
+            if (booking == null)
+                throw new Exception("Not Found");
+            booking.CheckInDate = CheckIn;
+            booking.CheckOutDate = CheckOut;
+
+            await _bookigRepository.Update(booking);
+            var rooms = await roomQuery.GetRoomsByBookingId(Id, true);
+            var deltedRooms = from item in rooms
+                        where !RoomsId.Contains(item.Id)
+                        select item;
+
+            var roomsWillAdd = await roomQuery.GetRoomsById(RoomsId.ToList() , true);
+            var updated = roomsWillAdd.Select(e => {
+                var ret = e;
+                e.HotelId = HotelId;
+                e.BranchId = BranchId;
+                e.BookingId = Id;
+                return e;
+            });
+            await _roomRepository.UpdateRange(updated);
         }
     }
 }

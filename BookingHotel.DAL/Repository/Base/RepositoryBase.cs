@@ -89,5 +89,11 @@ namespace BookingHotel.DAL.Repository.Base
 
             }
 
+        public async Task<T> Update(T entity)
+        {
+            Entities.Update(entity);
+             await _context.SaveChangesAsync();
+            return entity;
+        }
     }
 }

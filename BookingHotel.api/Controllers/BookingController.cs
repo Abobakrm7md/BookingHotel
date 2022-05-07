@@ -26,5 +26,22 @@ namespace BookingHotel.api.Controllers
             var result = await _mediator.Send(request);
             return Ok(result);
         }
+        [HttpDelete("{BookingId}/cancel")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Cancel([FromRoute]int BookingId)
+        {
+            CancelBookingRequest request = new CancelBookingRequest();
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        [HttpPut("update")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> UpdateBooking(UpdateBookingRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
     }
 }
