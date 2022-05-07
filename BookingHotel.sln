@@ -5,9 +5,11 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingHotel.api", "BookingHotel.api\BookingHotel.api.csproj", "{9564D49A-AC8F-45B8-9CBA-2D9F0B753BFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingHotel.DAL", "BookingHotel.DAL\BookingHotel.DAL.csproj", "{683B3B61-CB64-4455-9919-630F4F83385F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingHotel.DAL", "BookingHotel.DAL\BookingHotel.DAL.csproj", "{683B3B61-CB64-4455-9919-630F4F83385F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingHotel.BLL", "BookingHotel.BLL\BookingHotel.BLL.csproj", "{9EEB0A47-29AC-4D05-A2A5-A68B6A696513}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingHotel.BLL", "BookingHotel.BLL\BookingHotel.BLL.csproj", "{9EEB0A47-29AC-4D05-A2A5-A68B6A696513}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingHotel.Interface", "BookingHotel.Interface\BookingHotel.Interface.csproj", "{D89B2B21-8D64-464F-BF8B-971F367662C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9EEB0A47-29AC-4D05-A2A5-A68B6A696513}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EEB0A47-29AC-4D05-A2A5-A68B6A696513}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EEB0A47-29AC-4D05-A2A5-A68B6A696513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89B2B21-8D64-464F-BF8B-971F367662C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D89B2B21-8D64-464F-BF8B-971F367662C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89B2B21-8D64-464F-BF8B-971F367662C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D89B2B21-8D64-464F-BF8B-971F367662C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
