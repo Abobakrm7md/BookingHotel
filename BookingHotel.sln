@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingHotel.DAL", "Booking
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingHotel.BLL", "BookingHotel.BLL\BookingHotel.BLL.csproj", "{9EEB0A47-29AC-4D05-A2A5-A68B6A696513}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingHotel.Interface", "BookingHotel.Interface\BookingHotel.Interface.csproj", "{D89B2B21-8D64-464F-BF8B-971F367662C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingHotel.Interface", "BookingHotel.Interface\BookingHotel.Interface.csproj", "{D89B2B21-8D64-464F-BF8B-971F367662C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
