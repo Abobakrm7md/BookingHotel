@@ -1,0 +1,106 @@
+﻿@model BookingHotel.Interface.ViewModel.BookingModel
+
+
+@{
+    ViewBag.Title = "Booking";
+
+}
+
+
+<div class="col-md-12 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title">
+                    <h3 class="orange-text">Booking</h3>
+                </div>
+            </div>
+        </div>
+
+        <form method="post">
+
+            <div class="form-group row">
+
+                <label class="col-md-1 col-form-label ">Hotels </label>
+
+                <div class="col-md-5">
+                    @{
+                        var AllHotels = new SelectList(@Model.HotelModel.ToList(), "Id", "Name");
+                    }
+
+                    @*load Locations and Brands when select marketId *@
+                    <select asp-for="@Model.HotelId" asp-items="@AllHotels"
+                            class="custom-select mr-md-2 form-control" id="Hotel"
+                            onchange="GetBranches();">
+                        <option value="">Select Market</option>
+                    </select>
+                    <span asp-validation-for="@Model.HotelId" class="text-danger"></span>
+                </div>
+            </div>
+
+            @*Dropdown for Locations*@
+            <div class="form-group row">
+
+                <label class="col-md-1 col-form-label ">Branches </label>
+
+                <div class="col-md-5">
+
+
+
+                    <select asp-for="@Model.BranchId" data-placeholder="Select Locations" id="Branches"
+                    class="custom-select mr-md-2 form-control" multiple="multiple">
+                    </select>
+                    <span asp-validation-for="@Model.BranchId" class="text-danger"></span>
+                </div>
+            </div>
+
+           
+
+           
+            <br />
+            <button type="submit" class="btn btn-primary">Book</button>
+        </form>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
+<script>
+    function GetBranches( )
+    {
+       var HotelId = document.getElementById("Hotel").value;
+         $.ajax(
+            {
+                type: "GET",
+                url: "http://localhost:44385/api/hotel/"+HotelId+"/branches",
+                dataType: "json",
+                headers: {
+                    'Accept': 'text/plain, application/json, text/json',
+                    'Content-Type': 'application/json-patch+json',
+                },
+                success: function (Response) {
+                    console.log(Response);
+                    $('#Branches').empty();
+                    var options='';
+                    options +='<option value="">Select Branch</option>';
+                    Response.locations.forEach(data=>{
+                         options += '<option value="' + data["id"] + '">' +data["name"] + '</option>';
+                       });
+                    $('#Branches').append(options);
+                    $("#Branches").chosen({
+                    });
+                         $("#Branches").trigger("chosen:updated");
+                },
+                error: function (Response) {
+                    console.log(Response);
+                }
+            });
+    }
+
+</script>
