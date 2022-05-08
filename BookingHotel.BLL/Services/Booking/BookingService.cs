@@ -50,7 +50,11 @@ namespace BookingHotel.BLL.Services.Booking
         public async Task<BookingModel> Book(BookingArguments arguments)
         {
             User user = await CheckIfUserExistAndIntializeIt(arguments);
-            await _userRepository.SaveAsync(user, true);
+            if (user == null)
+                await _userRepository.SaveAsync(user, true);
+            else
+                await _userRepository.SaveAsync(user, false);
+
 
             var userBookBeforeTime = bookingQuery.GetBookingByUserId(user.Id);
             var newBooking = new BookingHotel.DAL.Entities.Booking
@@ -66,9 +70,10 @@ namespace BookingHotel.BLL.Services.Booking
             await _roomRepository.UpdateRange(rooms);
 
             var hotel = await _hotelRepository.GetByIdAsync(arguments.HotelId);
-            var roomcost = _context.LookUps.Where(x => x.Id == rooms.Select(x => x.Id).First()).Select(x => x.Cost).FirstOrDefault();
+            var roomcost = _context.LookUps.Where(x => x.Id == rooms.Select(x => x.Type).First()).Select(x => x.Cost).FirstOrDefault();
             return new BookingModel()
             {
+                Id = newBooking.Id,
                 Email = user.Email,
                 Hotel = new Models.Hotel.HotelModel { Id = hotel.Id, Name = hotel.Name },
                 Token = GetToken(new TokenModel { UserId = user.Id }),

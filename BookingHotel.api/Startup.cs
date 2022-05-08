@@ -67,6 +67,8 @@ namespace BookingHotel.api
                 optionsBuilder.UseSqlServer(BookingHotelSettings.ConnectionString);
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
+
+
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IBookingService, BookingService>();
@@ -86,12 +88,18 @@ namespace BookingHotel.api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookingHotel.api v1"));
             }
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>

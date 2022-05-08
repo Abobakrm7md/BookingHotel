@@ -14,15 +14,14 @@ namespace BookingHotel.Interface.Configurations
         {
             _restClient = new RestClient(@"http://localhost:44385/");
         }
-        public static async Task<RestResponse> SendRestPostRequest(string resource, Method method ,string token= "", string body = "")
+        public static async Task<RestResponse> SendRestPostRequest(string resource, Method method ,string token= "", object body = null)
         {
             IntializeClientRequest();
             RestRequest request = new RestRequest();
             request.Resource = new Uri(@"https://localhost:44385/" + resource).ToString();
             request.Method = method;
             request.RequestFormat = DataFormat.Json;
-            request.AddHeader("content-type", "text/plain");
-//            request.AddHeader("Authorization", "Bearer " + token);
+            request.AddHeader("content-type", "application/json");
 
             var response = await _restClient.ExecuteAsync(method == Method.Get ? request : request.AddJsonBody(body));
 

@@ -21,7 +21,7 @@ namespace BookingHotel.api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(List<BookingModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Book(BookingRequest request)
+        public async Task<IActionResult> Book([FromBody]BookingRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

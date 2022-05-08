@@ -1,0 +1,56 @@
+﻿@model BookingHotel.Interface.ViewModel.BookingDetailsModel
+
+
+@{
+    ViewBag.Title = "Details";
+
+}
+
+
+<div class="col-md-12 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title">
+                    <h3 class="orange-text">Booking</h3>
+                </div>
+            </div>
+        </div>
+
+        <label hidden>@Model.Id</label>
+
+        <div class="row">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            @Html.LabelFor(model => model.Hotel, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.Hotel.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.TextBoxFor(m => m.Cost, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            @foreach (var item in Model.Rooms)
+            {
+                <label>Room : @item</label>
+                <br />
+            }
+
+        </div>
+        <a asp-action="#" asp-controller="#" class="cart-btn fas" style="width:auto;text-align:center">Update</a>
+        <a asp-action="#" asp-controller="#" class="cart-btn fas" style="width:auto;text-align:center">Cancel</a>
+    </div>
+</div>

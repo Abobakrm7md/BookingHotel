@@ -1,48 +1,187 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BookingHotel.Interface</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/aspnet//signalr/dist/browser/signalr.js"></script>
+
+
+
+    <!-- title -->
+    <title>Booking Hotel</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="~/Content/assets/css/all.min.css">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="~/Content/assets/css/owl.carousel.css">
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="~/Content/assets/css/magnific-popup.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="~/Content/assets/css/animate.css">
+    <!-- mean menu css -->
+    <link rel="stylesheet" href="~/Content/assets/css/meanmenu.min.css">
+    <!-- main style -->
+    <link rel="stylesheet" href="~/Content/assets/css/main.css">
+    <!-- responsive -->
+    <link rel="stylesheet" href="~/Content/assets/css/responsive.css">
+
+    <environment exclude="Development">
+
+    </environment>
+    @*<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+    <link href="~/css/StyleSheet.css" rel="stylesheet" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BookingHotel.Interface</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+<body class="d-flex flex-column min-vh-100">
+    <!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+    <!-- header -->
+    <div class="top-header-area" id="sticker" style="background-color:#051922">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 text-center">
+                    <div class="main-menu-wrap">
+                        <!-- logo -->
+                        <div class="site-logo">
+                            <a href="#">
+                                <img src="~/Content/assets/img//booking.png" style="max-height:50px;" alt="">
+                                @*<img src="https://elzatoonah.com/en/assets/images/logo/default.svg" style="max-height:50px;" alt="zatoona">*@
+
+                            </a>
+                        </div>
+                        <!-- logo -->
+                        <!-- menu start -->
+                        <nav class="main-menu">
+                            <ul>
+                              
+                                <li>
+                                    <a href="#">New</a>
+                                    <ul class="sub-menu">
+                                        <li><a data-bs-toggle="modal" data-bs-target="#addNewProductModal">Add New Product</a></li>
+                                        @*<li><a href="#">Check Out</a></li>
+                                            <li><a href="#">Single Product</a></li>
+                                            <li><a href="#">Cart</a></li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <div class="header-icons">
+                                        @*<a class="shopping-cart" href="#"><i class="fas fa-shopping-cart"></i></a>*@
+                                        <a class="mobile-hide search-bar-icon" href="#" style="color:brown;"><i class="fas fa-search"></i></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a class="mobile-show search-bar-icon" href="#" style="color:brown;"><i class="fas fa-search"></i></a>
+                        <div class="mobile-menu"></div>
+                        <!-- menu end -->
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
+    </div>
+    <!-- end header -->
+    <!-- search area -->
+    <div class="search-area">
+        <div class="container">
+            <div class="row">
+                <form>
+                    <div class="col-lg-12">
+                        <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                        <div class="search-bar">
+                            <div class="search-bar-tablecell">
+                                <h3>Search For:</h3>
+                                @{
+                                    //var Gcontroller = "Search"; var GAction = "ProductPricesSearch";
+                                }
+                                <input type="text" placeholder="Keywords" id="textSearch">
+                                @*<a asp-action="@GAction" asp-controller="@Gcontroller" id="SearchButton"
+                                   class="fas">Search <i class="fas fa-search"></i></a>*@
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - BookingHotel.Interface - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="product-section mt-150 mb-150">
+        @RenderBody()
+
+    </div>
+ 
+
+    <footer class="mt-auto">
+        <!-- copyright -->
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <p>Copyrights &copy; 2019 - <a href="https://imransdesign.com/">Imran Hossain</a>,  All Rights Reserved.</p>
+                    </div>
+                    <div class="col-lg-6 text-right col-md-12">
+                        <div class="social-icons">
+                            <ul>
+                                <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- end copyright -->
+    <!-- jquery -->
+    <script src="~/Content/assets/js/jquery-1.11.3.min.js"></script>
+    <!-- bootstrap -->
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- count down -->
+    <script src="~/Content/assets/js/jquery.countdown.js"></script>
+    <!-- isotope -->
+    <script src="~/Content/assets/js/jquery.isotope-3.0.6.min.js"></script>
+    <!-- waypoints -->
+    <script src="~/Content/assets/js/waypoints.js"></script>
+    <!-- owl carousel -->
+    <script src="~/Content/assets/js/owl.carousel.min.js"></script>
+    <!-- magnific popup -->
+    <script src="~/Content/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- mean menu -->
+    <script src="~/Content/assets/js/jquery.meanmenu.min.js"></script>
+    <!-- sticker js -->
+    <script src="~/Content/assets/js/sticker.js"></script>
+    <!-- main js -->
+    <script src="~/Content/assets/js/main.js"></script>
+    <!-- Tree view -->
+    <script src="~/jstree/jstree.min.js"></script>
+    <!-- MultiSelect dropdown list -->
+    <script src="~/lib/chosen/chosen.jquery.min.js"></script>
+
 </body>
 </html>

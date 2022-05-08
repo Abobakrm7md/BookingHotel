@@ -18,22 +18,48 @@
         </div>
 
         <form method="post">
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+
+                    <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.NationalId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.NationalId, new { @class = "form-control" })
+
+                    <span asp-validation-for="@Model.NationalId" class="text-danger"></span>
+                </div>
+            </div>
 
             <div class="form-group row">
-
-                <label class="col-md-1 col-form-label ">Hotels </label>
-
+                @Html.LabelFor(model => model.HotelId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-5">
                     @{
                         var AllHotels = new SelectList(@Model.HotelModel.ToList(), "Id", "Name");
                     }
 
-                    @*load Locations and Brands when select marketId *@
-                    <select asp-for="@Model.HotelId" asp-items="@AllHotels"
-                            class="custom-select mr-md-2 form-control" id="Hotel"
-                            onchange="GetBranches();">
-                        <option value="">Select Market</option>
-                    </select>
+
+                    <select asp-for="@Model.HotelId" class="form-control" asp-items="@AllHotels" id="Hotel" onchange="GetBranches();"></select>
                     <span asp-validation-for="@Model.HotelId" class="text-danger"></span>
                 </div>
             </div>
@@ -41,22 +67,52 @@
             @*Dropdown for Locations*@
             <div class="form-group row">
 
-                <label class="col-md-1 col-form-label ">Branches </label>
+                @Html.LabelFor(model => model.BranchId, htmlAttributes: new { @class = "control-label col-md-2" })
 
                 <div class="col-md-5">
 
-
-
-                    <select asp-for="@Model.BranchId" data-placeholder="Select Locations" id="Branches"
-                    class="custom-select mr-md-2 form-control" multiple="multiple">
-                    </select>
+                    <select asp-for="@Model.BranchId" class="form-control" data-placeholder="Select Locations" id="Branches" onchange="GetRoomsType();"></select>
                     <span asp-validation-for="@Model.BranchId" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="form-group row">
+
+                @Html.LabelFor(model => model.RoomType, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-5">
+
+                    <select asp-for="@Model.RoomType" class="form-control" data-placeholder="Select Room" id="Roomtype" onchange="GetRooms();"></select>
+                    <span asp-validation-for="@Model.RoomType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-5">
+
+                    <select asp-for="@Model.RoomId" class="form-control" data-placeholder="Select Locations" id="rooms"></select>
+                    <span asp-validation-for="@Model.RoomId" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CheckIn, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CheckIn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CheckIn, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CheckOut, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CheckOut, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CheckOut, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-           
 
-           
             <br />
             <button type="submit" class="btn btn-primary">Book</button>
         </form>
@@ -72,24 +128,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
 <script>
-    function GetBranches( )
+
+    function GetBranches()
     {
-       var HotelId = document.getElementById("Hotel").value;
+        var HotelId = document.getElementById("Hotel").value;
+        var url = "https://localhost:44385/api/hotel/" + HotelId + "/branches";
+        console.log(HotelId);
+        console.log(url);
+
          $.ajax(
-            {
+             {
                 type: "GET",
-                url: "http://localhost:44385/api/hotel/"+HotelId+"/branches",
+                url: url,
                 dataType: "json",
                 headers: {
                     'Accept': 'text/plain, application/json, text/json',
                     'Content-Type': 'application/json-patch+json',
+                    'Access-Control-Allow-Origin':'*',
+                    'Access-Control-Allow-Headers': '*',
+                    'Orign': 'x-requested-with'
                 },
                 success: function (Response) {
                     console.log(Response);
                     $('#Branches').empty();
                     var options='';
                     options +='<option value="">Select Branch</option>';
-                    Response.locations.forEach(data=>{
+                    Response.forEach(data=>{
                          options += '<option value="' + data["id"] + '">' +data["name"] + '</option>';
                        });
                     $('#Branches').append(options);
@@ -97,10 +161,93 @@
                     });
                          $("#Branches").trigger("chosen:updated");
                 },
-                error: function (Response) {
+                 error: function (Response) {
+                     console.log("error");
                     console.log(Response);
                 }
             });
     }
+
+    function GetRoomsType() {
+
+        var url = "https://localhost:44385/api/room/type";
+        console.log(url);
+
+        $.ajax(
+            {
+                type: "GET",
+                url: url,
+                dataType: "json",
+                headers: {
+                    'Accept': 'text/plain, application/json, text/json',
+                    'Content-Type': 'application/json-patch+json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': '*',
+                    'Orign': 'x-requested-with'
+                },
+                success: function (Response) {
+                    console.log(Response);
+                    $('#Roomtype').empty();
+                    var options = '';
+                    options += '<option value="">Select room type</option>';
+                    Response.forEach(data => {
+                        options += '<option value="' + data["id"] + '">' + data["type"] + '</option>';
+                    });
+                    $('#Roomtype').append(options);
+                    $("#Roomtype").chosen({
+                    });
+                    $("#Roomtype").trigger("chosen:updated");
+                },
+                error: function (Response) {
+                    console.log("error");
+                    console.log(Response);
+                }
+            });
+    }
+
+    function GetRooms() {
+
+        var HotelId = document.getElementById("Hotel").value;
+        var BranchId = document.getElementById("Branches").value;
+        var RoomType = document.getElementById("Roomtype").value;
+
+        let body = {
+            hotelId: HotelId,
+            branchId: BranchId,
+            roomType: RoomType
+        };
+        console.log(body);
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "https://localhost:44385/api/room",
+                    dataType: "json",
+                    data: JSON.stringify(body),
+                    headers: {
+                        'Accept': 'text/plain, application/json, text/json',
+                        'Content-Type': 'application/json-patch+json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Headers': '*',
+                        'Orign': 'x-requested-with'
+                    },
+                    success: function (Response) {
+                        console.log(Response);
+                        $('#rooms').empty();
+                        var options = '';
+                        options += '<option value="">Select room type</option>';
+                        Response.forEach(data => {
+                            options += '<option value="' + data["id"] + '">' + data["id"] + '</option>';
+                        });
+                        $('#rooms').append(options);
+                        $("#rooms").chosen({
+                        });
+                        $("#rooms").trigger("chosen:updated");
+                    },
+                    error: function (Response) {
+                        console.log(Response);
+                    }
+                });
+        }
+
 
 </script>

@@ -9,6 +9,7 @@ namespace BookingHotel.BLL.Models.Book
 {
     public class BookingModel
     {
+        public int Id { get; set; }
         public string Email { get; set; }
         public HotelModel Hotel { get; set; }
         public List<int> Rooms { get; set; }
